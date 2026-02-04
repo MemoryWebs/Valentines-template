@@ -3,30 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Be My Valentine? ❤️</title>
+<title>Be My Valentine? 💖</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&family=Dancing+Script&display=swap" rel="stylesheet">
 
 <style>
 body {
-    background: linear-gradient(to right, #ff9a9e, #fecfef);
+    background: linear-gradient(to right, #ffb6c1, #ffe4e1);
     text-align: center;
     font-family: 'Poppins', sans-serif;
-    padding-top: 60px;
+    padding-top: 40px;
+    overflow: hidden;
 }
 
 h1 {
     font-family: 'Dancing Script', cursive;
-    font-size: 50px;
-    color: #b30000;
-}
-
-.buttons {
-    margin-top: 30px;
+    font-size: 46px;
+    color: #c2185b;
 }
 
 button {
-    padding: 12px 30px;
+    padding: 12px 28px;
     font-size: 18px;
     border: none;
     border-radius: 25px;
@@ -35,20 +32,26 @@ button {
 }
 
 #yes {
-    background: #ff4d6d;
+    background: #ff6f91;
     color: white;
 }
 
 #no {
     background: white;
-    color: #ff4d6d;
-    border: 2px solid #ff4d6d;
+    color: #ff6f91;
+    border: 2px solid #ff6f91;
     position: relative;
 }
 
-#surprise {
+#celebration {
     display: none;
     margin-top: 20px;
+}
+
+.bigText {
+    font-size: 32px;
+    color: #d63384;
+    font-weight: bold;
 }
 
 video {
@@ -57,41 +60,36 @@ video {
     margin-top: 10px;
 }
 
-.heart {
+canvas {
     position: fixed;
-    bottom: 0;
-    color: #ff4d6d;
-    font-size: 22px;
-    animation: float 4s linear forwards;
-}
-
-@keyframes float {
-    from { transform: translateY(0); }
-    to { transform: translateY(-100vh); }
+    top: 0;
+    left: 0;
+    pointer-events: none;
 }
 </style>
 </head>
 
 <body>
 
+<canvas id="fireworks"></canvas>
+
+<div id="mainScreen">
 <h1>Will You Be My Valentine? 💌</h1>
 
-<div class="buttons">
 <button id="yes" onclick="yesClicked()">YES 💖</button>
 <button id="no" onclick="noClicked()">NO 😅</button>
 </div>
 
-<div id="surprise">
+<div id="celebration">
 
-<h2>Yayyyyy! 🎉😍</h2>
+<p class="bigText">YAYYYYY! YOU SAID YES 😍🎉</p>
 
 <p>
-You just made me the HAPPIEST person ever!  
-I promise to make this Valentine super special 💖  
-Get ready for unlimited chocolates, hugs and happiness 😄
+You just unlocked unlimited hugs, chocolates and happiness!  
+Best decision ever 😄💖
 </p>
 
-<!-- ADD YOUR DANCING TEDDY VIDEO HERE -->
+<!-- ADD YOUR HAPPY TEDDY VIDEO HERE -->
 <video autoplay loop muted playsinline>
   <source src="teddy.mp4" type="video/mp4">
 </video>
@@ -100,42 +98,27 @@ Get ready for unlimited chocolates, hugs and happiness 😄
 
 <script>
 
-let noClickCount = 0;
+let noClick = 0;
 
 function yesClicked() {
-    document.querySelector(".buttons").style.display = "none";
-    document.getElementById("surprise").style.display = "block";
 
-    for(let i=0; i<30; i++) {
-        createHeart();
-    }
-}
+    document.getElementById("mainScreen").style.display = "none";
+    document.getElementById("celebration").style.display = "block";
 
-function createHeart() {
-    let heart = document.createElement("div");
-    heart.className = "heart";
-    heart.innerHTML = "❤️";
-    heart.style.left = Math.random() * 100 + "vw";
-
-    document.body.appendChild(heart);
-
-    setTimeout(() => {
-        heart.remove();
-    }, 4000);
+    startFireworks();
 }
 
 var noButton = document.getElementById("no");
 
 noButton.addEventListener("mouseover", function() {
     if(window.innerWidth > 600) {
-        moveButton();
+        moveNo();
     }
 });
 
-function moveButton() {
-    let x = Math.random() * 200 - 100;
-    let y = Math.random() * 200 - 100;
-
+function moveNo() {
+    let x = Math.random() * 250 - 120;
+    let y = Math.random() * 250 - 120;
     noButton.style.transform = `translate(${x}px, ${y}px)`;
 }
 
@@ -143,25 +126,86 @@ function noClicked() {
 
     if(window.innerWidth <= 600) {
 
-        noClickCount++;
+        noClick++;
 
-        let messages = [
+        let msgs = [
             "Nope 😜",
-            "Are you sure? 😢",
             "Think again 😏",
-            "Wrong choice 😂",
-            "Last chance 😅"
+            "Try YES 😂",
+            "Not allowed 😌",
+            "Okay bye NO 😆"
         ];
 
-        if(noClickCount <= 5) {
-            noButton.innerHTML = messages[noClickCount - 1];
+        if(noClick <= 5) {
+            noButton.innerHTML = msgs[noClick - 1];
         } else {
             noButton.style.display = "none";
         }
     }
 }
 
+/* FIREWORK EFFECT CODE */
+
+const canvas = document.getElementById("fireworks");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+
+function startFireworks() {
+    setInterval(createFirework, 700);
+    animate();
+}
+
+function createFirework() {
+    let x = Math.random() * canvas.width;
+    let y = Math.random() * canvas.height / 2;
+
+    for (let i = 0; i < 40; i++) {
+        particles.push({
+            x: x,
+            y: y,
+            radius: Math.random() * 3 + 1,
+            color: randomColor(),
+            speedX: Math.random() * 6 - 3,
+            speedY: Math.random() * 6 - 3,
+            alpha: 1
+        });
+    }
+}
+
+function randomColor() {
+    const colors = ["#ff4d6d", "#ff85a2", "#ffc2d1", "#ffffff", "#ffafcc"];
+    return colors[Math.floor(Math.random() * colors.length)];
+}
+
+function animate() {
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    particles.forEach((p, index) => {
+
+        p.x += p.speedX;
+        p.y += p.speedY;
+        p.alpha -= 0.01;
+
+        ctx.globalAlpha = p.alpha;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+
+        if (p.alpha <= 0) {
+            particles.splice(index, 1);
+        }
+    });
+
+    requestAnimationFrame(animate);
+}
+
 </script>
 
 </body>
-</html>
+                                                 </html>
