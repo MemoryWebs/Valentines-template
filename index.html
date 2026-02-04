@@ -12,8 +12,7 @@ body {
     background: linear-gradient(to right, #ffb6c1, #ffe4e1);
     text-align: center;
     font-family: 'Poppins', sans-serif;
-    padding-top: 40px;
-    overflow: hidden;
+    padding-top: 20px;
 }
 
 h1 {
@@ -46,6 +45,9 @@ button {
 #celebration {
     display: none;
     margin-top: 20px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding-bottom: 40px;
 }
 
 .bigText {
@@ -55,7 +57,8 @@ button {
 }
 
 video {
-    width: 220px;
+    max-width: 80%;
+    width: 260px;
     border-radius: 20px;
     margin-top: 10px;
 }
@@ -73,6 +76,11 @@ canvas {
 
 <canvas id="fireworks"></canvas>
 
+<!-- MUSIC ADDED HERE -->
+<audio id="bgMusic" loop>
+  <source src="happy.mp3" type="audio/mp3">
+</audio>
+
 <div id="mainScreen">
 <h1>Will You Be My Valentine? 💌</h1>
 
@@ -89,10 +97,14 @@ You just unlocked unlimited hugs, chocolates and happiness!
 Best decision ever 😄💖
 </p>
 
-<!-- ADD YOUR HAPPY TEDDY VIDEO HERE -->
+<!-- YOUR BABY DANCING VIDEO -->
 <video autoplay loop muted playsinline>
   <source src="baby.mp4" type="video/mp4">
 </video>
+
+<p style="margin-top:15px;color:#c2185b;">
+Take a screenshot and send it to me 💌
+</p>
 
 </div>
 
@@ -104,6 +116,9 @@ function yesClicked() {
 
     document.getElementById("mainScreen").style.display = "none";
     document.getElementById("celebration").style.display = "block";
+
+    // PLAY MUSIC WHEN YES IS CLICKED
+    document.getElementById("bgMusic").play();
 
     startFireworks();
 }
@@ -208,4 +223,4 @@ function animate() {
 </script>
 
 </body>
-                                                 </html>
+</html>
