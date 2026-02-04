@@ -10,15 +10,27 @@
 <style>
 body {
     background: linear-gradient(to right, #ffb6c1, #ffe4e1);
-    text-align: center;
     font-family: 'Poppins', sans-serif;
-    padding-top: 20px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 100vh;
+    margin: 0;
+    text-align: center;
+}
+
+.container {
+    width: 90%;
+    max-width: 500px;
 }
 
 h1 {
     font-family: 'Dancing Script', cursive;
-    font-size: 46px;
+    font-size: 42px;
     color: #c2185b;
+    margin-bottom: 20px;
 }
 
 button {
@@ -44,14 +56,13 @@ button {
 
 #celebration {
     display: none;
-    margin-top: 20px;
     max-height: 90vh;
     overflow-y: auto;
     padding-bottom: 40px;
 }
 
 .bigText {
-    font-size: 32px;
+    font-size: 30px;
     color: #d63384;
     font-weight: bold;
 }
@@ -76,19 +87,14 @@ canvas {
 
 <canvas id="fireworks"></canvas>
 
-<!-- MUSIC ADDED HERE -->
-<audio id="bgMusic" loop>
-  <source src="happy.mp3" type="audio/mp3">
-</audio>
-
-<div id="mainScreen">
+<div class="container" id="mainScreen">
 <h1>Will You Be My Valentine? 💌</h1>
 
 <button id="yes" onclick="yesClicked()">YES 💖</button>
 <button id="no" onclick="noClicked()">NO 😅</button>
 </div>
 
-<div id="celebration">
+<div class="container" id="celebration">
 
 <p class="bigText">YAYYYYY! YOU SAID YES 😍🎉</p>
 
@@ -116,9 +122,6 @@ function yesClicked() {
 
     document.getElementById("mainScreen").style.display = "none";
     document.getElementById("celebration").style.display = "block";
-
-    // PLAY MUSIC WHEN YES IS CLICKED
-    document.getElementById("bgMusic").play();
 
     startFireworks();
 }
