@@ -80,6 +80,20 @@ canvas {
     left: 0;
     pointer-events: none;
 }
+
+#stickerArea {
+    margin-top: 15px;
+}
+
+.sticker {
+    width: 150px;
+    animation: pop 0.3s ease;
+}
+
+@keyframes pop {
+    from { transform: scale(0.5); }
+    to { transform: scale(1); }
+}
 </style>
 </head>
 
@@ -92,6 +106,11 @@ canvas {
 
 <button id="yes" onclick="yesClicked()">YES 💖</button>
 <button id="no" onclick="noClicked()">NO 😅</button>
+
+<div id="stickerArea">
+   <img id="initialSticker" class="sticker" src="stickers/hopeful.png">
+</div>
+
 </div>
 
 <div class="container" id="celebration">
@@ -103,7 +122,6 @@ You just unlocked unlimited hugs, chocolates and happiness!
 Best decision ever 😄💖
 </p>
 
-<!-- YOUR BABY DANCING VIDEO -->
 <video autoplay loop muted playsinline>
   <source src="baby.mp4" type="video/mp4">
 </video>
@@ -147,15 +165,43 @@ function noClicked() {
         noClick++;
 
         let msgs = [
-            "Nope 😜",
-            "Think again 😏",
-            "Try YES 😂",
-            "Not allowed 😌",
-            "Okay bye NO 😆"
+            "Please say yes na... 🥺💗",
+            "Don't make me angry! 😠",
+            "I'll throw chappal at you! 🩴😤",
+            "Look... I'm getting emotional 😢",
+            "Okay fine I'm crying now 😭"
         ];
 
-        if(noClick <= 5) {
+        let stickers = [
+            "stickers/angry.png",
+            "stickers/slipper.png",
+            "stickers/teary.png",
+            "stickers/crying.png"
+        ];
+
+        let area = document.getElementById("stickerArea");
+
+        // Remove initial hopeful sticker after first NO click
+        let initial = document.getElementById("initialSticker");
+        if(initial) {
+            initial.remove();
+        }
+
+        if(noClick <= 4) {
+
             noButton.innerHTML = msgs[noClick - 1];
+
+            let img = document.createElement("img");
+            img.src = stickers[noClick - 1];
+            img.className = "sticker";
+
+            area.innerHTML = "";
+            area.appendChild(img);
+
+            // Make YES button bigger every time
+            document.getElementById("yes").style.fontSize =
+                (18 + noClick * 5) + "px";
+
         } else {
             noButton.style.display = "none";
         }
