@@ -178,17 +178,21 @@ video {
 let noBtn = document.getElementById("noBtn");
 let container = document.getElementById("mainScreen");
 
-/* Move No button inside container */
 function moveNo() {
-    let maxX = container.offsetWidth - 120;
-    let maxY = container.offsetHeight - 50;
+
+    let btnWidth = noBtn.offsetWidth;
+    let btnHeight = noBtn.offsetHeight;
+
+    let maxX = window.innerWidth - btnWidth - 10;
+    let maxY = window.innerHeight - btnHeight - 10;
 
     let randomX = Math.random() * maxX;
     let randomY = Math.random() * maxY;
 
+    noBtn.style.position = "fixed";
     noBtn.style.left = randomX + "px";
     noBtn.style.top = randomY + "px";
-}
+    }
 
 /* YES Click */
 function yesClicked() {
