@@ -188,26 +188,31 @@ video {
 
 <script>
 let noBtn = document.getElementById("noBtn");
-let container = document.getElementById("mainScreen");
+let buttonArea = document.querySelector(".buttons");
 
+/* Move NO button inside button container */
 function moveNo() {
+
+    let areaRect = buttonArea.getBoundingClientRect();
 
     let btnWidth = noBtn.offsetWidth;
     let btnHeight = noBtn.offsetHeight;
 
-    let maxX = window.innerWidth - btnWidth - 10;
-    let maxY = window.innerHeight - btnHeight - 10;
+    let maxX = areaRect.width - btnWidth;
+    let maxY = areaRect.height - btnHeight;
 
     let randomX = Math.random() * maxX;
     let randomY = Math.random() * maxY;
 
-    noBtn.style.position = "fixed";
+    noBtn.style.position = "absolute";
     noBtn.style.left = randomX + "px";
     noBtn.style.top = randomY + "px";
-    }
+}
+
 
 /* YES Click */
 function yesClicked() {
+
     document.getElementById("mainScreen").style.display = "none";
 
     let celebration = document.getElementById("celebration");
@@ -215,48 +220,66 @@ function yesClicked() {
 
     setTimeout(() => {
         document.getElementById("valVideo").play();
-    }, 800);
+    }, 1200);
 
     setTimeout(() => {
         startFireworks();
-    }, 1000);
+    }, 1500);
 
     startHearts();
 }
 
+
 /* Floating hearts */
 function startHearts() {
+
     setInterval(() => {
+
         let heart = document.createElement("div");
         heart.classList.add("heart");
         heart.innerHTML = "❤";
 
         heart.style.left = Math.random() * window.innerWidth + "px";
-        heart.style.fontSize = (12 + Math.random() * 8) + "px";
+        heart.style.fontSize = (12 + Math.random() * 10) + "px";
 
         document.body.appendChild(heart);
 
-        setTimeout(() => {
-            heart.remove();
-        }, 6000);
-    }, 600);
+        setTimeout(() => heart.remove(), 6000);
+
+    }, 700);
 }
 
-/* Fireworks */
+
+/* ✨ Better Fireworks */
 function startFireworks() {
+
     setInterval(() => {
-        let firework = document.createElement("div");
-        firework.classList.add("firework");
 
-        firework.style.left = Math.random() * window.innerWidth + "px";
-        firework.style.top = Math.random() * window.innerHeight + "px";
+        let centerX = Math.random() * window.innerWidth;
+        let centerY = Math.random() * window.innerHeight;
 
-        document.body.appendChild(firework);
+        for (let i = 0; i < 20; i++) {
 
-        setTimeout(() => {
-            firework.remove();
-        }, 1000);
-    }, 800);
+            let particle = document.createElement("div");
+            particle.classList.add("firework-particle");
+
+            let angle = Math.random() * 2 * Math.PI;
+            let distance = 60 + Math.random() * 40;
+
+            let x = Math.cos(angle) * distance;
+            let y = Math.sin(angle) * distance;
+
+            particle.style.left = centerX + "px";
+            particle.style.top = centerY + "px";
+            particle.style.setProperty("--x", x + "px");
+            particle.style.setProperty("--y", y + "px");
+
+            document.body.appendChild(particle);
+
+            setTimeout(() => particle.remove(), 1000);
+        }
+
+    }, 1200);
 }
 </script>
 
