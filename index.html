@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Be My Valentine? 💖</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&family=Dancing+Script&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&family=Dancing+Script&display=swap" rel="stylesheet">
 
 <style>
 body {
-    background: linear-gradient(135deg, #ffd6e0, #ffeef2);
+    background: linear-gradient(to right, #ffb6c1, #ffe4e1);
     font-family: 'Poppins', sans-serif;
 
     display: flex;
@@ -22,46 +22,23 @@ body {
     overflow: hidden;
 }
 
-/* Floating hearts background */
-body::before {
-    content: "💖  💕  💗  💓  💞";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    animation: float 10s infinite linear;
-    opacity: 0.2;
-    font-size: 40px;
-}
-
-@keyframes float {
-    from { transform: translateY(100vh); }
-    to { transform: translateY(-20vh); }
-}
-
 .container {
     width: 90%;
-    max-width: 480px;
-    padding: 30px 20px;
-
-    background: rgba(255,255,255,0.6);
-    backdrop-filter: blur(10px);
-    border-radius: 25px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    max-width: 500px;
 }
 
 h1 {
     font-family: 'Dancing Script', cursive;
     font-size: 42px;
     color: #c2185b;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
 }
 
 button {
-    padding: 12px 32px;
+    padding: 12px 28px;
     font-size: 18px;
     border: none;
-    border-radius: 30px;
+    border-radius: 25px;
     cursor: pointer;
     margin: 10px;
     transition: all 0.3s ease;
@@ -70,12 +47,6 @@ button {
 #yes {
     background: #ff6f91;
     color: white;
-    box-shadow: 0 4px 15px rgba(255,111,145,0.4);
-}
-
-#yes:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 20px rgba(255,111,145,0.7);
 }
 
 #no {
@@ -83,7 +54,6 @@ button {
     color: #ff6f91;
     border: 2px solid #ff6f91;
     position: relative;
-    transition: all 0.4s ease;
 }
 
 #celebration {
@@ -97,12 +67,6 @@ button {
     font-size: 30px;
     color: #d63384;
     font-weight: bold;
-    animation: pop 0.6s ease;
-}
-
-@keyframes pop {
-    from { transform: scale(0.7); }
-    to { transform: scale(1); }
 }
 
 video {
@@ -110,7 +74,6 @@ video {
     width: 260px;
     border-radius: 20px;
     margin-top: 10px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
 }
 
 canvas {
@@ -130,7 +93,7 @@ canvas {
 <h1>Will You Be My Valentine? 💌</h1>
 
 <button id="yes" onclick="yesClicked()">YES 💖</button>
-<button id="no">NO 😅</button>
+<button id="no">NO</button>
 </div>
 
 <div class="container" id="celebration">
@@ -168,11 +131,18 @@ noButton.addEventListener("touchstart", runAway);
 
 function runAway() {
 
-    let maxX = window.innerWidth - noButton.offsetWidth - 20;
-    let maxY = window.innerHeight - noButton.offsetHeight - 20;
+    let buttonWidth = noButton.offsetWidth;
+    let buttonHeight = noButton.offsetHeight;
+
+    let maxX = window.innerWidth - buttonWidth - 20;
+    let maxY = window.innerHeight - buttonHeight - 20;
 
     let x = Math.random() * maxX;
     let y = Math.random() * maxY;
+
+    // Keep it always inside screen
+    if (x < 10) x = 10;
+    if (y < 10) y = 10;
 
     noButton.style.position = "fixed";
     noButton.style.left = x + "px";
@@ -184,13 +154,18 @@ function runAway() {
 const canvas = document.getElementById("fireworks");
 const ctx = canvas.getContext("2d");
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
 
 let particles = [];
 
 function startFireworks() {
-    setInterval(createFirework, 700);
+    setInterval(createFirework, 600);
     animate();
 }
 
@@ -198,7 +173,7 @@ function createFirework() {
     let x = Math.random() * canvas.width;
     let y = Math.random() * canvas.height / 2;
 
-    for (let i = 0; i < 40; i++) {
+    for (let i = 0; i < 50; i++) {
         particles.push({
             x: x,
             y: y,
@@ -212,7 +187,7 @@ function createFirework() {
 }
 
 function randomColor() {
-    const colors = ["#ff4d6d", "#ff85a2", "#ffc2d1", "#ffffff", "#ffafcc"];
+    const colors = ["#ff4d6d", "#ff85a2", "#ffc2d1", "#ffffff", "#ffafcc", "#ff2e63"];
     return colors[Math.floor(Math.random() * colors.length)];
 }
 
@@ -224,7 +199,7 @@ function animate() {
 
         p.x += p.speedX;
         p.y += p.speedY;
-        p.alpha -= 0.01;
+        p.alpha -= 0.015;
 
         ctx.globalAlpha = p.alpha;
         ctx.beginPath();
@@ -243,4 +218,4 @@ function animate() {
 </script>
 
 </body>
-    </html>
+</html>
