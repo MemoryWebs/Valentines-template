@@ -108,7 +108,7 @@ canvas {
 <button id="no" onclick="noClicked()">NO 😅</button>
 
 <div id="stickerArea">
-   <img id="initialSticker" class="sticker" src="stickers/hopeful.png">
+   <img id="initialSticker" class="sticker" src="hopeful.png">
 </div>
 
 </div>
@@ -173,10 +173,10 @@ function noClicked() {
         ];
 
         let stickers = [
-            "stickers/angry.png",
-            "stickers/slipper.png",
-            "stickers/teary.png",
-            "stickers/crying.png"
+            "angry.png",
+            "slipper.png",
+            "teary.png",
+            "crying.png"
         ];
 
         let area = document.getElementById("stickerArea");
@@ -198,7 +198,7 @@ function noClicked() {
             area.innerHTML = "";
             area.appendChild(img);
 
-            // Make YES button bigger every time
+            // Make YES button grow bigger each time
             document.getElementById("yes").style.fontSize =
                 (18 + noClick * 5) + "px";
 
@@ -272,4 +272,4 @@ function animate() {
 </script>
 
 </body>
-</html>
+    </html>
