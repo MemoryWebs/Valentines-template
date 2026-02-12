@@ -29,7 +29,6 @@ body {
     max-width: 400px;
     padding: 20px;
 }
-/* Glass card */
 .glass-card {
     position: relative;
     padding: 40px 30px;
@@ -41,9 +40,22 @@ body {
     -webkit-backdrop-filter: blur(18px);
 
     border: 1px solid rgba(255, 255, 255, 0.4);
-    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.1);
+
+    box-shadow: 0 0 20px rgba(255, 105, 180, 0.4);
+    animation: glowPulse 3s ease-in-out infinite;
 }
 
+@keyframes glowPulse {
+    0% {
+        box-shadow: 0 0 15px rgba(255, 105, 180, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 35px rgba(255, 105, 180, 0.6);
+    }
+    100% {
+        box-shadow: 0 0 15px rgba(255, 105, 180, 0.3);
+    }
+    }
 /* Romantic heading */
 .glass-card h1 {
     font-size: 1.8rem;
