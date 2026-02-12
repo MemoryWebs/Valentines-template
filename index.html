@@ -1,221 +1,218 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Be My Valentine? 💖</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&family=Dancing+Script&display=swap" rel="stylesheet">
+<title>For You ❤️</title>
 
 <style>
 body {
-    background: linear-gradient(to right, #ffb6c1, #ffe4e1);
-    font-family: 'Poppins', sans-serif;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    height: 100vh;
     margin: 0;
-    text-align: center;
     overflow: hidden;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #ffd6e8, #ffc2d1);
+    height: 100vh;
 }
 
-.container {
-    width: 90%;
-    max-width: 500px;
+/* MAIN SCREEN */
+#mainScreen {
+    text-align: center;
+    position: relative;
+    top: 35%;
 }
 
 h1 {
-    font-family: 'Dancing Script', cursive;
-    font-size: 42px;
-    color: #c2185b;
-    margin-bottom: 20px;
+    font-size: 2.4rem;
+    color: #b30059;
+    margin-bottom: 40px;
 }
 
+/* GLASSMORPHISM BUTTONS */
 button {
-    padding: 12px 28px;
+    padding: 14px 34px;
+    margin: 20px;
     font-size: 18px;
-    border: none;
-    border-radius: 25px;
+    border-radius: 40px;
     cursor: pointer;
-    margin: 10px;
-    transition: all 0.3s ease;
-}
-
-#yes {
-    background: #ff6f91;
-    color: white;
-}
-
-#no {
-    background: white;
-    color: #ff6f91;
-    border: 2px solid #ff6f91;
     position: relative;
+
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: #b30059;
+    font-weight: 600;
+
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    transition: all 0.35s ease;
 }
 
+button:hover {
+    transform: scale(1.08);
+    box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+}
+
+/* YES button glow */
+#yesBtn:hover {
+    background: rgba(255, 77, 136, 0.35);
+}
+
+/* NO button positioning */
+#noBtn {
+    position: absolute;
+}
+
+/* CELEBRATION SCREEN */
 #celebration {
     display: none;
-    max-height: 90vh;
-    overflow-y: auto;
-    padding-bottom: 40px;
+    text-align: center;
+    padding-top: 80px;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
 }
 
-.bigText {
-    font-size: 30px;
-    color: #d63384;
-    font-weight: bold;
+#celebration h2 {
+    color: #b30059;
+    font-size: 2.6rem;
 }
 
 video {
-    max-width: 80%;
-    width: 260px;
+    margin-top: 30px;
+    width: 300px;
     border-radius: 20px;
-    margin-top: 10px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
 }
 
-canvas {
+/* Floating hearts */
+.heart {
     position: fixed;
-    top: 0;
-    left: 0;
-    pointer-events: none;
+    bottom: -10px;
+    font-size: 14px;
+    color: #ff4d88;
+    animation: floatUp 6s linear forwards;
+    opacity: 0.8;
+}
+
+@keyframes floatUp {
+    to {
+        transform: translateY(-110vh);
+        opacity: 0;
+    }
+}
+
+/* Fireworks */
+.firework {
+    position: fixed;
+    width: 6px;
+    height: 6px;
+    background: #ff1a75;
+    border-radius: 50%;
+    animation: explode 1s ease-out forwards;
+}
+
+@keyframes explode {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(15);
+        opacity: 0;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<canvas id="fireworks"></canvas>
-
-<div class="container" id="mainScreen">
-<h1>Will You Be My Valentine? 💌</h1>
-
-<button id="yes" onclick="yesClicked()">YES 💖</button>
-<button id="no">NO</button>
+<div id="mainScreen">
+    <h1>Will you say Yes?</h1>
+    <button id="yesBtn" onclick="yesClicked()">Yes</button>
+    <button id="noBtn" onmouseover="moveNo()">No</button>
 </div>
 
-<div class="container" id="celebration">
+<div id="celebration">
+    <h2>You said YES 💖</h2>
 
-<p class="bigText">YAYYYYY! YOU SAID YES 😍🎉</p>
-
-<p>
-You just unlocked unlimited hugs, chocolates and happiness!  
-Best decision ever 😄💖
-</p>
-
-<video autoplay loop muted playsinline>
-  <source src="baby.mp4" type="video/mp4">
-</video>
-
-<p style="margin-top:15px;color:#c2185b;">
-Take a screenshot and send it to me 💌
-</p>
-
+    <video id="valVideo" loop muted playsinline>
+        <source src="yourvideo.mp4" type="video/mp4">
+    </video>
 </div>
 
 <script>
+let noBtn = document.getElementById("noBtn");
 
+/* NO button runs but stays in screen */
+function moveNo() {
+    let maxX = window.innerWidth - 140;
+    let maxY = window.innerHeight - 80;
+
+    let randomX = Math.random() * maxX;
+    let randomY = Math.random() * maxY;
+
+    noBtn.style.left = randomX + "px";
+    noBtn.style.top = randomY + "px";
+}
+
+/* YES Click */
 function yesClicked() {
+
     document.getElementById("mainScreen").style.display = "none";
-    document.getElementById("celebration").style.display = "block";
 
-    startFireworks();
+    let celebration = document.getElementById("celebration");
+    celebration.style.display = "block";
+
+    setTimeout(() => {
+        celebration.style.opacity = "1";
+    }, 200);
+
+    setTimeout(() => {
+        document.getElementById("valVideo").play();
+    }, 1200);
+
+    setTimeout(() => {
+        startFireworks();
+    }, 1000);
+
+    startHearts();
 }
 
-var noButton = document.getElementById("no");
+/* Floating hearts */
+function startHearts() {
+    setInterval(() => {
+        let heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "❤";
 
-noButton.addEventListener("mouseover", runAway);
-noButton.addEventListener("touchstart", runAway);
+        heart.style.left = Math.random() * window.innerWidth + "px";
+        heart.style.fontSize = (12 + Math.random() * 8) + "px";
 
-function runAway() {
+        document.body.appendChild(heart);
 
-    let buttonWidth = noButton.offsetWidth;
-    let buttonHeight = noButton.offsetHeight;
+        setTimeout(() => {
+            heart.remove();
+        }, 6000);
 
-    let maxX = window.innerWidth - buttonWidth - 20;
-    let maxY = window.innerHeight - buttonHeight - 20;
-
-    let x = Math.random() * maxX;
-    let y = Math.random() * maxY;
-
-    // Keep it always inside screen
-    if (x < 10) x = 10;
-    if (y < 10) y = 10;
-
-    noButton.style.position = "fixed";
-    noButton.style.left = x + "px";
-    noButton.style.top = y + "px";
+    }, 500);
 }
 
-/* FIREWORK EFFECT CODE */
-
-const canvas = document.getElementById("fireworks");
-const ctx = canvas.getContext("2d");
-
-function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-}
-
-resizeCanvas();
-window.addEventListener("resize", resizeCanvas);
-
-let particles = [];
-
+/* Fireworks */
 function startFireworks() {
-    setInterval(createFirework, 600);
-    animate();
+    setInterval(() => {
+        let firework = document.createElement("div");
+        firework.classList.add("firework");
+
+        firework.style.left = Math.random() * window.innerWidth + "px";
+        firework.style.top = Math.random() * window.innerHeight + "px";
+
+        document.body.appendChild(firework);
+
+        setTimeout(() => {
+            firework.remove();
+        }, 1000);
+
+    }, 600);
 }
-
-function createFirework() {
-    let x = Math.random() * canvas.width;
-    let y = Math.random() * canvas.height / 2;
-
-    for (let i = 0; i < 50; i++) {
-        particles.push({
-            x: x,
-            y: y,
-            radius: Math.random() * 3 + 1,
-            color: randomColor(),
-            speedX: Math.random() * 6 - 3,
-            speedY: Math.random() * 6 - 3,
-            alpha: 1
-        });
-    }
-}
-
-function randomColor() {
-    const colors = ["#ff4d6d", "#ff85a2", "#ffc2d1", "#ffffff", "#ffafcc", "#ff2e63"];
-    return colors[Math.floor(Math.random() * colors.length)];
-}
-
-function animate() {
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    particles.forEach((p, index) => {
-
-        p.x += p.speedX;
-        p.y += p.speedY;
-        p.alpha -= 0.015;
-
-        ctx.globalAlpha = p.alpha;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx.fillStyle = p.color;
-        ctx.fill();
-
-        if (p.alpha <= 0) {
-            particles.splice(index, 1);
-        }
-    });
-
-    requestAnimationFrame(animate);
-}
-
 </script>
 
 </body>
-</html>
+        </html>
