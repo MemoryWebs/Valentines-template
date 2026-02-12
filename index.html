@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Be My Valentine? 💖</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&family=Dancing+Script&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&family=Dancing+Script&display=swap" rel="stylesheet">
 
 <style>
 body {
-    background: linear-gradient(to right, #ffb6c1, #ffe4e1);
+    background: linear-gradient(135deg, #ffd6e0, #ffeef2);
     font-family: 'Poppins', sans-serif;
 
     display: flex;
@@ -19,32 +19,63 @@ body {
     height: 100vh;
     margin: 0;
     text-align: center;
+    overflow: hidden;
+}
+
+/* Floating hearts background */
+body::before {
+    content: "💖  💕  💗  💓  💞";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    animation: float 10s infinite linear;
+    opacity: 0.2;
+    font-size: 40px;
+}
+
+@keyframes float {
+    from { transform: translateY(100vh); }
+    to { transform: translateY(-20vh); }
 }
 
 .container {
     width: 90%;
-    max-width: 500px;
+    max-width: 480px;
+    padding: 30px 20px;
+
+    background: rgba(255,255,255,0.6);
+    backdrop-filter: blur(10px);
+    border-radius: 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
 }
 
 h1 {
     font-family: 'Dancing Script', cursive;
     font-size: 42px;
     color: #c2185b;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
 button {
-    padding: 12px 28px;
+    padding: 12px 32px;
     font-size: 18px;
     border: none;
-    border-radius: 25px;
+    border-radius: 30px;
     cursor: pointer;
     margin: 10px;
+    transition: all 0.3s ease;
 }
 
 #yes {
     background: #ff6f91;
     color: white;
+    box-shadow: 0 4px 15px rgba(255,111,145,0.4);
+}
+
+#yes:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(255,111,145,0.7);
 }
 
 #no {
@@ -52,7 +83,7 @@ button {
     color: #ff6f91;
     border: 2px solid #ff6f91;
     position: relative;
-    transition: transform 0.2s ease;
+    transition: all 0.4s ease;
 }
 
 #celebration {
@@ -66,6 +97,12 @@ button {
     font-size: 30px;
     color: #d63384;
     font-weight: bold;
+    animation: pop 0.6s ease;
+}
+
+@keyframes pop {
+    from { transform: scale(0.7); }
+    to { transform: scale(1); }
 }
 
 video {
@@ -73,6 +110,7 @@ video {
     width: 260px;
     border-radius: 20px;
     margin-top: 10px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
 }
 
 canvas {
@@ -129,10 +167,14 @@ noButton.addEventListener("mouseover", runAway);
 noButton.addEventListener("touchstart", runAway);
 
 function runAway() {
-    let x = Math.random() * (window.innerWidth - 150);
-    let y = Math.random() * (window.innerHeight - 150);
 
-    noButton.style.position = "absolute";
+    let maxX = window.innerWidth - noButton.offsetWidth - 20;
+    let maxY = window.innerHeight - noButton.offsetHeight - 20;
+
+    let x = Math.random() * maxX;
+    let y = Math.random() * maxY;
+
+    noButton.style.position = "fixed";
     noButton.style.left = x + "px";
     noButton.style.top = y + "px";
 }
@@ -201,4 +243,4 @@ function animate() {
 </script>
 
 </body>
-</html>
+    </html>
