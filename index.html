@@ -1,88 +1,99 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For You ❤️</title>
 
 <style>
-body {
+* {
     margin: 0;
-    overflow: hidden;
-    font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #ffd6e8, #ffc2d1);
-    height: 100vh;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-/* MAIN SCREEN */
-#mainScreen {
+body {
+    height: 100vh;
+    font-family: 'Segoe UI', cursive;
+    background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
+}
+
+/* Main Container */
+.container {
     position: relative;
-    top: 35%;
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
 }
 
 h1 {
-    font-size: 2.4rem;
-    color: #b30059;
+    font-size: 1.9rem;
+    color: #8b004f;
     margin-bottom: 40px;
+    font-weight: 600;
 }
 
-/* GLASSMORPHISM BUTTONS */
+/* Glass Buttons */
 button {
-    padding: 14px 34px;
-    margin: 20px;
-    font-size: 18px;
-    border-radius: 40px;
+    padding: 14px 32px;
+    margin: 15px;
+    font-size: 17px;
+    border-radius: 50px;
+    border: none;
     cursor: pointer;
-    position: relative;
 
-    background: rgba(255, 255, 255, 0.25);
+    background: rgba(255,255,255,0.25);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
 
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    color: #b30059;
+    border: 1px solid rgba(255,255,255,0.4);
+    color: #8b004f;
     font-weight: 600;
 
-    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-    transition: all 0.35s ease;
+    transition: 0.3s ease;
 }
 
 button:hover {
     transform: scale(1.08);
-    box-shadow: 0 12px 35px rgba(0,0,0,0.15);
 }
 
-/* YES button glow */
-#yesBtn:hover {
-    background: rgba(255, 77, 136, 0.35);
-}
-
-/* NO button positioning */
 #noBtn {
     position: absolute;
 }
 
-/* CELEBRATION SCREEN */
+/* Celebration */
 #celebration {
     display: none;
-    text-align: center;
-    padding-top: 80px;
-    opacity: 0;
-    transition: opacity 1.5s ease-in-out;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 1.5s ease forwards;
 }
 
 #celebration h2 {
-    color: #b30059;
-    font-size: 2.6rem;
+    color: #8b004f;
+    font-size: 2rem;
+    margin-bottom: 20px;
 }
 
 video {
-    margin-top: 30px;
-    width: 300px;
+    width: 80%;
+    max-width: 300px;
     border-radius: 20px;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
 
-/* Floating hearts */
+/* Fade animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* Hearts */
 .heart {
     position: fixed;
     bottom: -10px;
@@ -110,29 +121,22 @@ video {
 }
 
 @keyframes explode {
-    0% {
-        transform: scale(1);
-        opacity: 1;
-    }
-    100% {
-        transform: scale(15);
-        opacity: 0;
-    }
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(15); opacity: 0; }
 }
 </style>
 </head>
 
 <body>
 
-<div id="mainScreen">
+<div class="container" id="mainScreen">
     <h1>Will you say Yes?</h1>
-    <button id="yesBtn" onclick="yesClicked()">Yes</button>
+    <button onclick="yesClicked()">Yes</button>
     <button id="noBtn" onmouseover="moveNo()">No</button>
 </div>
 
-<div id="celebration">
+<div class="container" id="celebration">
     <h2>You said YES 💖</h2>
-
     <video id="valVideo" loop muted playsinline>
         <source src="yourvideo.mp4" type="video/mp4">
     </video>
@@ -140,11 +144,12 @@ video {
 
 <script>
 let noBtn = document.getElementById("noBtn");
+let container = document.getElementById("mainScreen");
 
-/* NO button runs but stays in screen */
+/* Move No button inside container */
 function moveNo() {
-    let maxX = window.innerWidth - 140;
-    let maxY = window.innerHeight - 80;
+    let maxX = container.offsetWidth - 120;
+    let maxY = container.offsetHeight - 50;
 
     let randomX = Math.random() * maxX;
     let randomY = Math.random() * maxY;
@@ -155,19 +160,14 @@ function moveNo() {
 
 /* YES Click */
 function yesClicked() {
-
     document.getElementById("mainScreen").style.display = "none";
 
     let celebration = document.getElementById("celebration");
-    celebration.style.display = "block";
-
-    setTimeout(() => {
-        celebration.style.opacity = "1";
-    }, 200);
+    celebration.style.display = "flex";
 
     setTimeout(() => {
         document.getElementById("valVideo").play();
-    }, 1200);
+    }, 800);
 
     setTimeout(() => {
         startFireworks();
@@ -191,8 +191,7 @@ function startHearts() {
         setTimeout(() => {
             heart.remove();
         }, 6000);
-
-    }, 500);
+    }, 600);
 }
 
 /* Fireworks */
@@ -209,10 +208,9 @@ function startFireworks() {
         setTimeout(() => {
             firework.remove();
         }, 1000);
-
-    }, 600);
+    }, 800);
 }
 </script>
 
 </body>
-        </html>
+</html>
