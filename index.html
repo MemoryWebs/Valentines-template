@@ -52,6 +52,7 @@ button {
     color: #ff6f91;
     border: 2px solid #ff6f91;
     position: relative;
+    transition: transform 0.2s ease;
 }
 
 #celebration {
@@ -80,20 +81,6 @@ canvas {
     left: 0;
     pointer-events: none;
 }
-
-#stickerArea {
-    margin-top: 15px;
-}
-
-.sticker {
-    width: 150px;
-    animation: pop 0.3s ease;
-}
-
-@keyframes pop {
-    from { transform: scale(0.5); }
-    to { transform: scale(1); }
-}
 </style>
 </head>
 
@@ -105,12 +92,7 @@ canvas {
 <h1>Will You Be My Valentine? 💌</h1>
 
 <button id="yes" onclick="yesClicked()">YES 💖</button>
-<button id="no" onclick="noClicked()">NO 😅</button>
-
-<div id="stickerArea">
-   <img id="initialSticker" class="sticker" src="hopeful.png">
-</div>
-
+<button id="no">NO 😅</button>
 </div>
 
 <div class="container" id="celebration">
@@ -134,10 +116,7 @@ Take a screenshot and send it to me 💌
 
 <script>
 
-let noClick = 0;
-
 function yesClicked() {
-
     document.getElementById("mainScreen").style.display = "none";
     document.getElementById("celebration").style.display = "block";
 
@@ -146,66 +125,16 @@ function yesClicked() {
 
 var noButton = document.getElementById("no");
 
-noButton.addEventListener("mouseover", function() {
-    if(window.innerWidth > 600) {
-        moveNo();
-    }
-});
+noButton.addEventListener("mouseover", runAway);
+noButton.addEventListener("touchstart", runAway);
 
-function moveNo() {
-    let x = Math.random() * 250 - 120;
-    let y = Math.random() * 250 - 120;
-    noButton.style.transform = `translate(${x}px, ${y}px)`;
-}
+function runAway() {
+    let x = Math.random() * (window.innerWidth - 150);
+    let y = Math.random() * (window.innerHeight - 150);
 
-function noClicked() {
-
-    if(window.innerWidth <= 600) {
-
-        noClick++;
-
-        let msgs = [
-            "Please say yes na... 🥺💗",
-            "Don't make me angry! 😠",
-            "I'll throw chappal at you! 🩴😤",
-            "Look... I'm getting emotional 😢",
-            "Okay fine I'm crying now 😭"
-        ];
-
-        let stickers = [
-            "angry.png",
-            "slipper.png",
-            "teary.png",
-            "crying.png"
-        ];
-
-        let area = document.getElementById("stickerArea");
-
-        // Remove initial hopeful sticker after first NO click
-        let initial = document.getElementById("initialSticker");
-        if(initial) {
-            initial.remove();
-        }
-
-        if(noClick <= 4) {
-
-            noButton.innerHTML = msgs[noClick - 1];
-
-            let img = document.createElement("img");
-            img.src = stickers[noClick - 1];
-            img.className = "sticker";
-
-            area.innerHTML = "";
-            area.appendChild(img);
-
-            // Make YES button grow bigger each time
-            document.getElementById("yes").style.fontSize =
-                (18 + noClick * 5) + "px";
-
-        } else {
-            noButton.style.display = "none";
-        }
-    }
+    noButton.style.position = "absolute";
+    noButton.style.left = x + "px";
+    noButton.style.top = y + "px";
 }
 
 /* FIREWORK EFFECT CODE */
@@ -272,4 +201,4 @@ function animate() {
 </script>
 
 </body>
-    </html>
+</html>
