@@ -201,8 +201,10 @@ video {
 <script>
 let noBtn = document.getElementById("noBtn");
 let buttonArea = document.querySelector(".buttons");
+<script>
+let noBtn = document.getElementById("noBtn");
+let buttonArea = document.querySelector(".buttons");
 
-/* Move NO button inside button container */
 function moveNo() {
 
     let areaRect = buttonArea.getBoundingClientRect();
@@ -213,13 +215,32 @@ function moveNo() {
     let maxX = areaRect.width - btnWidth;
     let maxY = areaRect.height - btnHeight;
 
-    let randomX = Math.random() * maxX;
-    let randomY = Math.random() * maxY;
-
     noBtn.style.position = "absolute";
-    noBtn.style.left = randomX + "px";
-    noBtn.style.top = randomY + "px";
+
+    // Hyper active multi-jump
+    let jumps = 3;  // number of quick jumps
+    let count = 0;
+
+    let interval = setInterval(() => {
+
+        let randomX = Math.random() * maxX;
+        let randomY = Math.random() * maxY;
+        let rotate = Math.random() * 40 - 20;
+
+        noBtn.style.left = randomX + "px";
+        noBtn.style.top = randomY + "px";
+        noBtn.style.transform = "rotate(" + rotate + "deg) scale(1.1)";
+
+        count++;
+
+        if (count >= jumps) {
+            clearInterval(interval);
+            noBtn.style.transform = "rotate(0deg) scale(1)";
+        }
+
+    }, 120);  // smaller = more hyper
 }
+</script>
 
 
 /* YES Click */
