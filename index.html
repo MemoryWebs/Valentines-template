@@ -217,6 +217,26 @@ video {
 let noBtn = document.getElementById("noBtn");
 let buttonArea = document.querySelector(".buttons");
 
+startBackgroundHearts();
+
+function startBackgroundHearts() {
+
+    setInterval(() => {
+
+        let heart = document.createElement("div");
+        heart.classList.add("bg-heart");
+        heart.innerHTML = "❤";
+
+        heart.style.left = Math.random() * window.innerWidth + "px";
+        heart.style.fontSize = (16 + Math.random() * 20) + "px";
+
+        document.getElementById("backgroundHearts").appendChild(heart);
+
+        setTimeout(() => heart.remove(), 8000);
+
+    }, 900);
+    }
+    
 function moveNo() {
 
     let areaRect = buttonArea.getBoundingClientRect();
